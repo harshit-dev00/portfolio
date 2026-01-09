@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Harshit Upadhyay - AI Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #007acc;
+      --dark-bg: #0f2027;
+      --glass: rgba(255, 255, 255, 0.1);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(120deg, #f0f4f8, #d9e4f5);
+      color: #222;
+    }
+
+    .container { max-width: 1200px; margin: auto; padding: 40px 20px; }
+
+    .top-nav { display: flex; justify-content: space-between; align-items: center; margin-bottom: 50px; }
+
+    .top-nav .left-title { font-size: 24px; font-weight: 700; }
+
+    .top-nav .left-title span { color: var(--primary); font-size: 16px; }
+
+    .top-nav .right-links { display: flex; gap: 25px; }
+
+    .top-nav .right-links a {
+      text-decoration: none;
+      color: #333;
+      font-weight: 500;
+      position: relative;
+    }
+
+    .top-nav .right-links a::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background-color: var(--primary);
+      transition: 0.3s ease;
+    }
+
+    .top-nav .right-links a:hover::after { width: 100%; }
+
+    .profile-section { text-align: center; }
+
+    .profile-pic-wrapper {
+      position: relative;
+      width: 200px;
+      height: 200px;
+      margin: auto;
+    }
+
+    .profile-pic-wrapper::before {
+      content: "";
+      position: absolute;
+      top: -5px;
+      left: -5px;
+      width: 210px;
+      height: 210px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #007acc, #00c6ff);
+      animation: rotate 6s linear infinite;
+      z-index: 0;
+    }
+
+    .profile-pic {
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      object-fit: cover;
+      position: relative;
+      z-index: 1;
+      border: 5px solid white;
+    }
+
+    @keyframes rotate { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+    .info h1 {
+      font-size: 42px;
+      margin-top: 25px;
+      background: linear-gradient(90deg, #007acc, #00bcd4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .info h2 { font-size: 20px; color: #666; margin-top: 10px; }
+
+    .about {
+      max-width: 800px;
+      margin: 40px auto;
+      background: var(--glass);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 30px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+
+    .about h3 { font-size: 24px; margin-bottom: 15px; color: #111; }
+
+    .about p { font-size: 16px; line-height: 1.8; color: #333; margin-bottom: 15px; }
+
+    .circle-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    .circle-buttons a {
+      text-decoration: none;
+      font-weight: 600;
+      color: #fff;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .circle-buttons a:hover { transform: scale(1.1); }
+
+    .btn-resume { background: #00796B; }
+    .btn-research { background: #0288D1; }
+    .btn-outreach { background: #26C6DA; }
+    .btn-personal { background: #BDBDBD; color: black; }
+
+    footer {
+      text-align: center;
+      padding: 30px 10px;
+      background-color: #f7f7f7;
+      margin-top: 60px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    footer a { color: var(--primary); text-decoration: none; }
+
+    @media (max-width: 768px) {
+      .profile-pic-wrapper { width: 160px; height: 160px; }
+      .profile-pic-wrapper::before { width: 170px; height: 170px; }
+      .profile-pic { width: 160px; height: 160px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Navigation -->
+    <div class="top-nav">
+      <div class="left-title">Harshit Upadhyay <span>• Developer</span></div>
+      <div class="right-links">
+        <a href="resume/Harshit.pdf" target="_blank">Resume</a>
+        <a href="#">Research</a>
+        <a href="#">Outreach</a>
+        <a href="projects.html">Projects</a>
+      </div>
+    </div>
+
+    <!-- Profile -->
+    <div class="profile-section">
+      <div class="profile-pic-wrapper">
+        <img src="image.png" alt="Profile Picture" class="profile-pic" />
+      </div>
+      <div class="info">
+        <h1>Harshit Upadhyay</h1>
+        <h2>Aspiring AI Developer</h2>
+      </div>
+    </div>
+
+    <!-- About -->
+    <div class="about">
+      <h3>🚀 A Bit About Me</h3>
+      <p>
+        I am an aspiring AI Developer with a strong foundation in Computer Science through my Polytechnic diploma.
+        I am passionate about solving real-world problems using Artificial Intelligence and have built AI-based tools
+        using Python, machine learning, and Flutter.
+      </p>
+      <p>
+        I specialize in building intelligent solutions like smart inventory systems, resume shortlisting tools,
+        and more — using technologies like TensorFlow, scikit-learn, and APIs.
+      </p>
+      <p>
+        Despite not having a degree, I have learned everything through hands-on projects, self-study, and open-source contributions.
+      </p>
+      <p>
+        I’m actively looking for a role where I can apply my AI and software skills to create impact-driven tools and grow as a professional developer.
+      </p>
+    </div>
+
+    <!-- Buttons -->
+    <div class="circle-buttons">
+      <a href="resume/Harshit.pdf" class="btn-resume" target="_blank">Resume</a>
+      <a href="#" class="btn-research">Research</a>
+      <a href="#" class="btn-outreach">Outreach</a>
+      <a href="projects.html" class="btn-personal">Projects</a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>Email: trjsharshit@gmail.com</p>
+      <p>GitHub: <a href="https://github.com/harshit-ai" target="_blank">harshit-ai</a></p>
+      <p>© 2025 Harshit Upadhyay. Designed with ❤️ and Coffee.</p>
+    </footer>
+  </div>
+</body>
+</html>
