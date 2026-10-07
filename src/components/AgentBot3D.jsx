@@ -13,7 +13,6 @@ const EYE_COLOR = "#f97316";
 const BUBBLE_POS = [1.7, 2.3, 1.5];
 const DRAG_SPEED = 0.01;
 const RETURN_TO_FRONT = true;
-const SHOW_ARMS = true;     // false = hands bilkul hata do
 
 const MESSAGES = [
   "Hello 👋",
@@ -59,63 +58,6 @@ function useHeadTexture() {
     t.colorSpace = THREE.SRGBColorSpace;
     return t;
   }, []);
-}
-
-/* ---------- Arm (shoulder, upper arm, elbow, forearm, hand) ---------- */
-function Arm({ side }) {
-  const ref = useRef();
-
-  useFrame((state) => {
-    if (!ref.current) return;
-    const t = state.clock.elapsedTime;
-    // halka swing, dono arms ulte phase me
-    ref.current.rotation.x = Math.sin(t * 1.2 + (side > 0 ? 0 : Math.PI)) * 0.08;
-  });
-
-  const white = { color: "#f6f6f6", roughness: 0.35, clearcoat: 0.7, clearcoatRoughness: 0.3 };
-  const dark = { color: "#2a2a2e", roughness: 0.5, metalness: 0.3 };
-
-  return (
-    <group position={[side * 0.9, 0.2, 0.02]} rotation={[0, 0, side * 0.32]}>
-      <group ref={ref}>
-        {/* shoulder joint */}
-        <mesh>
-          <sphereGeometry args={[0.14, 32, 32]} />
-          <meshStandardMaterial {...dark} />
-        </mesh>
-
-        {/* upper arm */}
-        <mesh position={[0, -0.27, 0]}>
-          <cylinderGeometry args={[0.1, 0.085, 0.4, 32]} />
-          <meshPhysicalMaterial {...white} />
-        </mesh>
-
-        {/* elbow */}
-        <mesh position={[0, -0.5, 0]}>
-          <sphereGeometry args={[0.1, 32, 32]} />
-          <meshStandardMaterial {...dark} />
-        </mesh>
-
-        {/* forearm */}
-        <mesh position={[0, -0.7, 0]}>
-          <cylinderGeometry args={[0.085, 0.075, 0.32, 32]} />
-          <meshPhysicalMaterial {...white} />
-        </mesh>
-
-        {/* wrist */}
-        <mesh position={[0, -0.88, 0]}>
-          <cylinderGeometry args={[0.09, 0.09, 0.04, 32]} />
-          <meshStandardMaterial {...dark} />
-        </mesh>
-
-        {/* hand */}
-        <mesh position={[0, -1.02, 0]} scale={[1, 1.1, 0.85]}>
-          <sphereGeometry args={[0.14, 32, 32]} />
-          <meshPhysicalMaterial {...white} />
-        </mesh>
-      </group>
-    </group>
-  );
 }
 
 /* ---------- Robot (3D, drag se rotate) ---------- */
@@ -176,14 +118,6 @@ function Robot({ drag }) {
           <sphereGeometry args={[0.08, 24, 24]} />
           <meshBasicMaterial color={EYE_COLOR} toneMapped={false} />
         </mesh>
-
-        {/* Arms */}
-        {SHOW_ARMS && (
-          <>
-            <Arm side={-1} />
-            <Arm side={1} />
-          </>
-        )}
 
         {/* Neck ring */}
         <mesh position={[0, 0.9, 0]} rotation={[Math.PI / 2, 0, 0]}>
