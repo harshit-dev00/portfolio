@@ -6,7 +6,7 @@ export default function SunnifyPreview() {
       <div className="bg-gradient-to-br from-sky-400 to-violet-500 p-4 text-left relative">
         <span className="absolute top-2 left-2 text-[9px] text-black/50">v1.0.0</span>
         <span className="absolute top-2 right-2 text-[10px] text-black/60">x</span>
-        <p className="text-black font-bold text-sm mt-4">Sunnify</p>
+        <p className="text-black font-bold text-sm mt-4">Harshit</p>
         <p className="text-black/60 text-[9px] mb-3">
           Spotify Downloader — Created By Sunny Patel
         </p>
