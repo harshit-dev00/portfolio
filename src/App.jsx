@@ -6,6 +6,7 @@ import ProjectDetail from "./pages/ProjectDetail.jsx";
 import Resume from "./pages/Resume.jsx";
 import About from "./pages/About.jsx";
 import CustomCursor from "./components/CustomCursor.jsx";
+import ChatWidget from "./components/ChatWidget.jsx";
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/resume" element={<Resume />} />
         <Route path="/about" element={<About />} />
       </Routes>
+      <ChatWidget />
     </BrowserRouter>
   );
 }
