@@ -10,7 +10,7 @@ import { projects } from "../data/projects.js";
 
 const previewMap = {
   "ats-screener": <ATSScreenerPreview />,
-  sunnify: <SunnifyPreview />,
+  Restaurant: <SunnifyPreview />,
   netdash: <NetdashPreview />,
 };
 
