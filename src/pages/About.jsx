@@ -9,7 +9,10 @@ const meta = [
   { label: "BASED IN", value: "Meerut, India" },
   { label: "CURRENTLY", value: "Fresher — open to LLMOps & Agentic AI roles" },
   { label: "STUDYING", value: "Diploma in Computer Science" },
-  { label: "FOCUS", value: "Agentic AI, LLMOps, full-stack" },
+  {
+    label: "FOCUS",
+    value: "Agentic AI, LLMOps, full-stack, first-principles debugging",
+  },
 ];
 
 export default function About() {
@@ -82,21 +85,34 @@ export default function About() {
                 actually know when something's wrong before a user does.
               </p>
 
-              <p>
-                I'm early in my career, but I don't build like it.{" "}
-                <span className="text-accent">
-                  I don't ship a project and walk away
-                </span>
-                , I keep maintaining what I build because I'd rather learn
-                from something staying alive in the real world than move on
-                to the next thing. So when I say something will hold, it
-                isn't confidence borrowed from a tutorial.{" "}
-                <span className="text-accent">
-                  It's from having broken it myself first
-                </span>
-                , in my own projects, and knowing exactly where the weight
-                falls.
-              </p>
+              {/* first-principles section */}
+<div className="flex flex-col gap-4 pt-4">
+  <div className="flex items-center gap-3 text-xs text-white/40 tracking-widest">
+    <span className="w-6 h-px bg-accent" />
+    HOW I THINK
+  </div>
+
+  <h2 className="text-2xl md:text-3xl font-bold leading-tight text-cream">
+    I think from <span className="text-accent">first principles.</span>
+  </h2>
+
+  <p>
+    <span className="text-accent">
+      I start with the question, not the tool.
+    </span>{" "}
+    AI can write the code now, so the harder part is knowing what to ask:
+    what is this system actually supposed to guarantee, and which one
+    variable decides whether it holds? In my RAG projects, that meant
+    tracing a bad answer back through retrieval, chunking and prompt
+    instead of just swapping models. Execution is getting cheap. Finding
+    the real problem isn't. That's also why I keep maintaining what I
+    build:{" "}
+    <span className="text-accent">
+      it's from having broken it myself first
+    </span>
+    , in my own projects, that I know exactly where the weight falls.
+  </p>
+</div>
             </div>
           </div>
         </div>

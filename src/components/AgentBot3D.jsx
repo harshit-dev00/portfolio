@@ -5,9 +5,9 @@ import { Html, Line } from "@react-three/drei";
 import * as THREE from "three";
 
 /* ================= CONTROLS ================= */
-const CAMERA_Z = 10.5;      // bada = sab chhota (space ke andar)
-const ROBOT_SCALE = 1.35;   // robot ka size
-const NODE_SCALE = 0.95;    // chips ki orbit ka size
+const CAMERA_Z = 10.5;      
+const ROBOT_SCALE = 1.35;   
+const NODE_SCALE = 0.95;    
 const ORBIT_SPEED = 0.2;
 const EYE_COLOR = "#f97316";
 const BUBBLE_POS = [1.7, 2.3, 1.5];
@@ -60,7 +60,7 @@ function useHeadTexture() {
   }, []);
 }
 
-/* ---------- Robot (3D, drag se rotate) ---------- */
+/* Robot */
 function Robot({ drag }) {
   const speckle = useSpeckleTexture();
   const headTex = useHeadTexture();
@@ -171,7 +171,7 @@ function Robot({ drag }) {
   );
 }
 
-/* ---------- Chat bubble (fixed, typing effect) ---------- */
+/* Chat bubble  */
 function Bubble() {
   const [msgIndex, setMsgIndex] = useState(0);
   const [text, setText] = useState("");
