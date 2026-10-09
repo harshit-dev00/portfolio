@@ -31,7 +31,7 @@ const categories = [
   {
     icon: Wrench,
     title: "Tools",
-    skills: ["Git", "CI/CD", "Linux", "AWS", "Vercel"],
+    skills: ["Git", "CI/CD", "Linux", "AWS", "Vercel", "Kimi CLI"],
   },
 ];
 
