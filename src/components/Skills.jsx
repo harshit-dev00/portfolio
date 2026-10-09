@@ -6,12 +6,12 @@ import {
   Bot,
   Server,
   Rocket,
-  Settings2,
+  Network,
 } from "lucide-react";
 
 /*
-  skill = "Python"  (normal)
-  skill = { name, internals: [...] }  (badge + hover pe keywords)
+  skill = "Python"                       -> normal
+  skill = { name: "Kimi CLI", tag: "architecture" }  -> naam ke saath chhota tag
 */
 const stages = [
   {
@@ -40,16 +40,7 @@ const stages = [
       "LangChain",
       "LangGraph",
       "LlamaIndex",
-      {
-        name: "Kimi CLI",
-        internals: [
-          "agent loop (plan → act → observe)",
-          "tool calling: shell + file edit",
-          "MCP servers for extra tools",
-          "context & session handling",
-          "LLM provider abstraction",
-        ],
-      },
+      { name: "Kimi CLI", tag: "architecture" },
     ],
   },
   {
@@ -69,7 +60,6 @@ const stages = [
 export default function Skills() {
   const [active, setActive] = useState(0);
   const [paused, setPaused] = useState(false);
-  const [tip, setTip] = useState(null);
   const last = stages.length - 1;
 
   useEffect(() => {
@@ -163,13 +153,12 @@ export default function Skills() {
                   <ul className="space-y-1.5">
                     {s.skills.map((skill, k) => {
                       const name = typeof skill === "string" ? skill : skill.name;
-                      const internals =
-                        typeof skill === "string" ? null : skill.internals;
+                      const tag = typeof skill === "string" ? null : skill.tag;
 
                       return (
                         <li
                           key={name}
-                          className={`relative text-xs font-mono flex items-center lg:justify-center gap-2 transition-all duration-500 ${
+                          className={`text-xs font-mono flex items-center lg:justify-center gap-2 transition-all duration-500 ${
                             isActive
                               ? "text-white/90 opacity-100"
                               : "text-white/40 opacity-70"
@@ -185,39 +174,11 @@ export default function Skills() {
                           />
                           {name}
 
-                          {internals && (
-                            <button
-                              onMouseEnter={() => setTip(name)}
-                              onMouseLeave={() => setTip(null)}
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setTip((t) => (t === name ? null : name));
-                              }}
-                              className="flex items-center gap-1 text-[9px] uppercase tracking-wider text-accent border border-accent/40 rounded px-1.5 py-0.5 hover:bg-accent/10 transition-colors"
-                            >
-                              <Settings2 size={9} />
-                              internals
-                            </button>
-                          )}
-
-                          {internals && tip === name && (
-                            <div className="absolute z-30 top-full mt-2 left-0 lg:left-1/2 lg:-translate-x-1/2 w-64 text-left border border-accent/40 rounded-lg bg-[#0d0d0d] p-3 shadow-[0_8px_30px_rgba(0,0,0,0.6)]">
-                              <div className="text-[10px] text-white/40 mb-2">
-                                <span className="text-accent">$</span>{" "}
-                                {name.toLowerCase().replace(" ", "-")} --internals
-                              </div>
-                              <ul className="space-y-1">
-                                {internals.map((x) => (
-                                  <li
-                                    key={x}
-                                    className="text-[11px] text-white/75 flex gap-2"
-                                  >
-                                    <span className="text-accent">›</span>
-                                    {x}
-                                  </li>
-                                ))}
-                              </ul>
-                            </div>
+                          {tag && (
+                            <span className="flex items-center gap-1 text-[9px] uppercase tracking-wider text-accent border border-accent/40 rounded px-1.5 py-0.5">
+                              <Network size={9} />
+                              {tag}
+                            </span>
                           )}
                         </li>
                       );
@@ -230,16 +191,9 @@ export default function Skills() {
         </div>
       </div>
 
-      <div className="mt-14 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-mono text-white/35">
-        <span>
-          <span className="text-accent">→</span> code → data → models → agents →
-          serve → ship
-        </span>
-        <span className="flex items-center gap-1.5">
-          <Settings2 size={11} className="text-accent" />= I know how it works
-          internally
-        </span>
-      </div>
+      <p className="mt-14 text-xs font-mono text-white/35">
+        <span className="text-accent">→</span> code → data → models → agents → serve → ship
+      </p>
     </section>
   );
 }
