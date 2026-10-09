@@ -23,7 +23,7 @@ export default function Projects() {
       <main className="px-8 md:px-12 pt-8 pb-24 relative z-10">
         <div className="flex items-center gap-3 text-sm text-white/50 mb-6">
           <span className="w-6 h-px bg-white/30" />
-          PROJECTS
+          PROJECT
         </div>
 
         <h1 className="text-5xl md:text-6xl font-extrabold text-cream mb-6">
