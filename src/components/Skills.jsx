@@ -1,41 +1,85 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Code2,
+  Database,
+  Cpu,
   Bot,
   Server,
-  Database,
-  Wrench,
+  Rocket,
+  Settings2,
 } from "lucide-react";
 
-const categories = [
+/*
+  skill = "Python"  (normal)
+  skill = { name, internals: [...] }  (badge + hover pe keywords)
+*/
+const stages = [
   {
     icon: Code2,
-    title: "Languages",
+    title: "Code",
+    sub: "languages",
     skills: ["Python", "JavaScript", "TypeScript", "SQL"],
   },
   {
+    icon: Database,
+    title: "Data",
+    sub: "store & retrieve",
+    skills: ["PostgreSQL", "Redis", "Vector DBs", "RAG Pipelines"],
+  },
+  {
+    icon: Cpu,
+    title: "Models",
+    sub: "llm layer",
+    skills: ["OpenAI SDK", "Hugging Face", "Model Serving"],
+  },
+  {
     icon: Bot,
-    title: "AI & Agent Frameworks",
-    skills: ["LangChain", "LangGraph", "LlamaIndex", "OpenAI SDK", "Hugging Face"],
+    title: "Agents",
+    sub: "plan · act · reason",
+    skills: [
+      "LangChain",
+      "LangGraph",
+      "LlamaIndex",
+      {
+        name: "Kimi CLI",
+        internals: [
+          "agent loop (plan → act → observe)",
+          "tool calling: shell + file edit",
+          "MCP servers for extra tools",
+          "context & session handling",
+          "LLM provider abstraction",
+        ],
+      },
+    ],
   },
   {
     icon: Server,
-    title: "LLMOps & Infra",
-    skills: ["Vector DBs", "Evals", "Observability", "Model Serving", "RAG Pipelines"],
+    title: "Serve",
+    sub: "apis & quality",
+    skills: ["FastAPI", "Node.js", "Evals", "Observability"],
   },
   {
-    icon: Database,
-    title: "Backend & Systems",
-    skills: ["FastAPI", "Node.js", "Docker", "PostgreSQL", "Redis"],
-  },
-  {
-    icon: Wrench,
-    title: "Tools",
-    skills: ["Git", "CI/CD", "Linux", "AWS", "Vercel", "Kimi CLI"],
+    icon: Rocket,
+    title: "Ship",
+    sub: "deploy & ops",
+    skills: ["Docker", "Git", "CI/CD", "Linux", "AWS", "Vercel"],
   },
 ];
 
 export default function Skills() {
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const [tip, setTip] = useState(null);
+  const last = stages.length - 1;
+
+  useEffect(() => {
+    if (paused) return;
+    const id = setInterval(() => setActive((p) => (p + 1) % stages.length), 2000);
+    return () => clearInterval(id);
+  }, [paused]);
+
+  const pct = (active / last) * 100;
+
   return (
     <section className="px-8 md:px-12 py-24 relative z-10 overflow-hidden">
       <div className="flex items-center gap-3 text-sm text-white/50 mb-6">
@@ -50,71 +94,152 @@ export default function Skills() {
         <span className="text-accent">$</span> skills --scan --verbose
       </p>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {categories.map((cat, catIndex) => {
-          const Icon = cat.icon;
-          return (
-            <div
-              key={cat.title}
-              className="group border border-white/10 rounded-lg p-6 hover:border-accent/40 transition-colors relative overflow-hidden animate-rise"
-              style={{ animationDelay: `${catIndex * 90}ms` }}
-            >
-              <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                <div className="absolute -inset-y-full left-0 w-px bg-gradient-to-b from-transparent via-accent/60 to-transparent animate-scan" />
-              </div>
+      <div
+        className="relative"
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
+      >
+        {/* Mobile vertical rail */}
+        <div className="lg:hidden absolute left-[19px] top-5 bottom-5 w-px bg-white/10">
+          <div
+            className="absolute top-0 left-0 w-px bg-accent transition-all duration-700"
+            style={{ height: `${pct}%` }}
+          />
+        </div>
 
-              <div className="flex items-center gap-2 mb-5">
-                <Icon size={16} className="text-accent" />
-                <h3 className="text-sm tracking-wide text-white/70 uppercase">
-                  {cat.title}
-                </h3>
-              </div>
+        {/* Desktop horizontal rail */}
+        <div className="hidden lg:block absolute top-5 left-[8.333%] right-[8.333%] h-px bg-white/10">
+          <div
+            className="absolute left-0 top-0 h-px bg-accent transition-all duration-700"
+            style={{ width: `${pct}%` }}
+          />
+          <div
+            className="absolute -top-[3px] w-[7px] h-[7px] rounded-full bg-accent shadow-[0_0_12px_rgba(249,115,22,0.9)] transition-all duration-700"
+            style={{ left: `calc(${pct}% - 3px)` }}
+          />
+        </div>
 
-              <div className="flex flex-wrap gap-2">
-                {cat.skills.map((skill, i) => (
-                  <span
-                    key={skill}
-                    className="text-xs text-white/70 border border-white/10 rounded px-3 py-1.5 hover:border-accent/60 hover:text-accent hover:-translate-y-0.5 transition-all duration-200 cursor-default animate-fade-in"
-                    style={{
-                      animationDelay: `${catIndex * 90 + i * 60 + 200}ms`,
-                    }}
+        <div className="grid grid-cols-1 lg:grid-cols-6 gap-8 lg:gap-4">
+          {stages.map((s, i) => {
+            const Icon = s.icon;
+            const isActive = i === active;
+            const isDone = i < active;
+            return (
+              <div
+                key={s.title}
+                onMouseEnter={() => setActive(i)}
+                onClick={() => setActive(i)}
+                className="flex lg:flex-col items-start lg:items-center gap-4 lg:gap-5 cursor-default"
+              >
+                {/* Node */}
+                <div
+                  className={`relative z-10 shrink-0 w-10 h-10 rounded-full grid place-items-center border bg-[#0a0a0a] transition-all duration-500 ${
+                    isActive
+                      ? "border-accent text-accent scale-110 shadow-[0_0_20px_rgba(249,115,22,0.45)]"
+                      : isDone
+                      ? "border-accent/50 text-accent/70"
+                      : "border-white/15 text-white/40"
+                  }`}
+                >
+                  <Icon size={16} />
+                </div>
+
+                {/* Content */}
+                <div className="lg:text-center">
+                  <div className="text-[10px] font-mono text-white/30 mb-1">
+                    0{i + 1}
+                  </div>
+                  <h3
+                    className={`text-sm tracking-wide uppercase transition-colors duration-500 ${
+                      isActive ? "text-cream" : "text-white/60"
+                    }`}
                   >
-                    {skill}
-                  </span>
-                ))}
+                    {s.title}
+                  </h3>
+                  <div className="text-[11px] font-mono text-white/35 mb-3">
+                    {s.sub}
+                  </div>
+
+                  <ul className="space-y-1.5">
+                    {s.skills.map((skill, k) => {
+                      const name = typeof skill === "string" ? skill : skill.name;
+                      const internals =
+                        typeof skill === "string" ? null : skill.internals;
+
+                      return (
+                        <li
+                          key={name}
+                          className={`relative text-xs font-mono flex items-center lg:justify-center gap-2 transition-all duration-500 ${
+                            isActive
+                              ? "text-white/90 opacity-100"
+                              : "text-white/40 opacity-70"
+                          }`}
+                          style={{
+                            transitionDelay: isActive ? `${k * 60}ms` : "0ms",
+                          }}
+                        >
+                          <span
+                            className={`w-1 h-1 rounded-full transition-colors duration-500 ${
+                              isActive ? "bg-accent" : "bg-white/20"
+                            }`}
+                          />
+                          {name}
+
+                          {internals && (
+                            <button
+                              onMouseEnter={() => setTip(name)}
+                              onMouseLeave={() => setTip(null)}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setTip((t) => (t === name ? null : name));
+                              }}
+                              className="flex items-center gap-1 text-[9px] uppercase tracking-wider text-accent border border-accent/40 rounded px-1.5 py-0.5 hover:bg-accent/10 transition-colors"
+                            >
+                              <Settings2 size={9} />
+                              internals
+                            </button>
+                          )}
+
+                          {internals && tip === name && (
+                            <div className="absolute z-30 top-full mt-2 left-0 lg:left-1/2 lg:-translate-x-1/2 w-64 text-left border border-accent/40 rounded-lg bg-[#0d0d0d] p-3 shadow-[0_8px_30px_rgba(0,0,0,0.6)]">
+                              <div className="text-[10px] text-white/40 mb-2">
+                                <span className="text-accent">$</span>{" "}
+                                {name.toLowerCase().replace(" ", "-")} --internals
+                              </div>
+                              <ul className="space-y-1">
+                                {internals.map((x) => (
+                                  <li
+                                    key={x}
+                                    className="text-[11px] text-white/75 flex gap-2"
+                                  >
+                                    <span className="text-accent">›</span>
+                                    {x}
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+                          )}
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
 
-      <style>{`
-        @keyframes rise {
-          from { opacity: 0; transform: translateY(16px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-rise {
-          opacity: 0;
-          animation: rise 0.6s ease-out forwards;
-        }
-
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(6px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-        .animate-fade-in {
-          opacity: 0;
-          animation: fadeIn 0.4s ease-out forwards;
-        }
-
-        @keyframes scan {
-          0% { top: -100%; }
-          100% { top: 100%; }
-        }
-        .animate-scan {
-          animation: scan 1.8s ease-in-out infinite;
-        }
-      `}</style>
+      <div className="mt-14 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs font-mono text-white/35">
+        <span>
+          <span className="text-accent">→</span> code → data → models → agents →
+          serve → ship
+        </span>
+        <span className="flex items-center gap-1.5">
+          <Settings2 size={11} className="text-accent" />= I know how it works
+          internally
+        </span>
+      </div>
     </section>
   );
 }
