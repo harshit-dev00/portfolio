@@ -11,7 +11,7 @@ import {
 
 /*
   skill = "Python"                       -> normal
-  skill = { name: "Kimi CLI", tag: "architecture" }  -> naam ke saath chhota tag
+  skill = { name: "Kimi Code CLI", tag: "architecture" }  -> naam ke saath chhota tag
 */
 const stages = [
   {
